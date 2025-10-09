@@ -126,7 +126,7 @@ function analyzeSalesData(data, options) {
 
     seller.top_products = Object.entries(seller.products_sold).map(
       (product, index) => {
-        return { [product[0]]: product[1] };
+        return { sku: product[0], quantity: product[1] };
       }
     );
 
