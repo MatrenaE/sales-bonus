@@ -25,14 +25,14 @@ function calculateBonusByProfit(index, total, seller) {
   // @TODO: Расчет бонуса от позиции в рейтинге
   const { profit } = seller;
   if (index === 0) {
-    return seller * (15 / 100);
+    return profit * (15 / 100);
   } else if (index === 1 || index === 2) {
-    return seller * (10 / 100);
+    return profit * (10 / 100);
   } else if (index === total - 1) {
     return 0;
   } else {
     // Для всех остальных
-    return seller * (5 / 100);
+    return profit * (5 / 100);
   }
   // После этого мы можем рассчитать бонус — это дополнительные деньги,
   // которые составляют определённый процент от прибыли. Для этого умножаем прибыль
@@ -122,7 +122,7 @@ function analyzeSalesData(data, options) {
   sellerStats.sort((a, b) => b.profit - a.profit);
 
   sellerStats.forEach((seller, index) => {
-    seller.bonus = calculateBonus(index, sellerStats.length, seller.profit);
+    seller.bonus = calculateBonus(index, sellerStats.length, seller);
 
     seller.top_products = Object.entries(seller.products_sold).map(
       (product, index) => {
