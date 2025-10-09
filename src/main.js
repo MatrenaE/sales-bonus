@@ -48,9 +48,22 @@ function calculateBonusByProfit(index, total, seller) {
 
 const options = { calculateSimpleRevenue, calculateBonusByProfit };
 function analyzeSalesData(data, options) {
-  if (!data || !Array.isArray(data.sellers) || data.sellers.length === 0) {
-    throw new Error("Data is not correct");
+  if (!data) {
+    throw new Error("Data is undefined");
   }
+  if (!Array.isArray(data.sellers) || data.sellers.length === 0) {
+    throw new Error("data.sellers is empty or undefined");
+  }
+  if (!Array.isArray(data.products) || data.products.length === 0) {
+    throw new Error("data.products is empty or undefined");
+  }
+  if (
+    !Array.isArray(data.purchase_records) ||
+    data.purchase_records.length === 0
+  ) {
+    throw new Error("data.purchase_records is empty or undefined");
+  }
+
   //   const { calculateSimpleRevenue, calculateBonusByProfit } = options;
   if (!(typeof options === "object")) {
     throw new Error("Options is not object");
@@ -140,10 +153,4 @@ function analyzeSalesData(data, options) {
     top_products: seller.top_products, // Массив объектов вида: { "sku": "SKU_008","quantity": 10}, топ-10 товаров продавца
     bonus: +seller.bonus.toFixed(2), // Число с двумя знаками после точки, бонус продавца
   }));
-
-  // @TODO: Подготовка итоговой коллекции с нужными полями
-  //   const { calculateSimpleRevenue, calculateBonusByProfit } = options; // Сюда передадим функции для расчётов
-  // Здесь посчитаем промежуточные данные и отсортируем продавцов
-  // Вызовем функцию расчёта бонуса для каждого продавца в отсортированном массиве
-  // Сформируем и вернём отчёт
 }
