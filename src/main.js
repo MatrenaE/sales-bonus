@@ -113,7 +113,7 @@ function analyzeSalesData(data, options) {
       if (!seller.products_sold[item.sku]) {
         seller.products_sold[item.sku] = 0;
       }
-      seller.products_sold[item.sku] += 1;
+      seller.products_sold[item.sku] += item.quantity;
       // По артикулу товара увеличить его проданное количество у продавца
     });
   });
@@ -131,9 +131,7 @@ function analyzeSalesData(data, options) {
     );
 
     seller.top_products = seller.top_products.sort((a, b) => {
-      const [keyA] = Object.keys(a);
-      const [keyB] = Object.keys(b);
-      return b[keyB] - a[keyA];
+      return b.quantity - a.quantity;
     });
 
     seller.top_products = seller.top_products.slice(0, 10);
